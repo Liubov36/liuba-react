@@ -19,7 +19,7 @@ import { Navigate } from './navigate';
 
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { AppLoading } from "expo";
+import { AppLoading } from 'expo';
 
 import RegistrationScreen from './Screens/RegistrationScreen';
 import LoginScreen from './Screens/LoginScreen';
@@ -61,7 +61,7 @@ export default function App() {
   const Navigate = useRoute({});
   return <NavigationContainer>
     {Navigate}
-  return (
+    return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
       <ImageBackground style={styles.image} source={image}>
