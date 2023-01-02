@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCallback } from 'react';
+import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import {
   StyleSheet,
@@ -17,18 +18,18 @@ import {
 } from 'react-native';
 import { Navigate } from './navigate';
 
-import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { AppLoading } from 'expo';
 
 import RegistrationScreen from './Screens/RegistrationScreen';
 import LoginScreen from './Screens/LoginScreen';
 import Home from './Screens/Home';
-import MapScreen from './Screens/MapScreen';
+import MapScreen from './Screens/nestedScreens/MapScreen';
 import ProfileScreen from './Screens/ProfileScreen';
-import CommentsScreen from './Screens/CommentsScreen';
+import CommentsScreen from './Screens/nestedScreens/CommentsScreen';
 import CreatePostsScreen from './Screens/CreatePostsScreen';
 import PostsScreen from './Screens/PostsScreen';
+import DefaultSreenPosts from './Screens/nestedScreens/DefaultScreenPosts';
 
 const image = require('./assets/images/PhotoBG.jpg'); 
 
@@ -48,7 +49,7 @@ export default function App() {
     return null;
   }
   const [iasReady, setIasReady] = useState(false);
-
+  // const routing = useRoute(true);
   if (!iasReady) {
     return (
       <AppLoading
@@ -58,9 +59,6 @@ export default function App() {
       />
     );
   }
-  const Navigate = useRoute({});
-  return <NavigationContainer>
-    {Navigate}
     return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
@@ -71,18 +69,18 @@ export default function App() {
                <RegistrationScreen />
               <LoginScreen />
               <Home />
-              <MapScreen />
-              <ProfileScreen />
-              <CommentsScreen />
               <CreatePostsScreen />
               <PostsScreen />
+              <ProfileScreen />
+              <MapScreen />
+              <CommentsScreen />
+              <DefaultSreenPosts />
           </KeyboardAvoidingView>
         </ImageBackground>
         <StatusBar style='auto' />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
-  </NavigationContainer>;
 }
 
 const styles = StyleSheet.create({

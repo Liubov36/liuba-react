@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather, Ionicons } from '@expo/vector-icons';
@@ -11,9 +12,7 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import RegistrationScreen from './Screens/RegistrationScreen';
 import LoginScreen from './Screens/LoginScreen';
 import Home from './Screens/Home';
-import MapScreen from './Screens/MapScreen';
 import ProfileScreen from './Screens/ProfileScreen';
-import CommentsScreen from './Screens/CommentsScreen';
 import CreatePostsScreen from './Screens/CreatePostsScreen';
 import PostsScreen from './Screens/PostsScreen';
 
@@ -139,8 +138,6 @@ const useRoute = (isStack) => {
                 name='ProfileScreen'
                 component={ProfileScreen} 
                 />
-        <Tab.Screen name='MapScreen' component={MapScreen} />
-        <Tab.Screen name='CommentsScreen' component={CommentsScreen} />
       </Tab.Navigator>
         );
       };
