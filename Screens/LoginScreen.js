@@ -17,7 +17,8 @@ const initialState = {
   password: '',
 };
 
-export default function LoginScreen() {
+export default function LoginScreen( {navigation}) {
+  console.log("navigation", navigation);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
@@ -96,7 +97,14 @@ export default function LoginScreen() {
           </Text>
         </TouchableOpacity>
         <View style={styles.boxQuestion}>
-          <Text style={styles.paragraph}>Нет аккаунта? Зарегистрироваться</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('RegistrationScreen')}>
+          <Text style={styles.paragraph}>
+            Нет аккаунта?{' '}
+            <Text style={styles.paragraphBtn}>
+              Зарегистрироваться
+              </Text>
+              </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -173,5 +181,13 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 16,
     textAlign: 'center',
+    color: '#1B4371',
+    fontFamily: 'Roboto-Regular',
+  },
+  paragraphBtn: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#1B4371',
+    fontFamily: 'Roboto-Regular',
   },
 });
