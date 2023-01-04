@@ -1,8 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { Provider } from 'react-redux';
+
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -15,6 +16,10 @@ import Home from './Screens/Home';
 import ProfileScreen from './Screens/ProfileScreen';
 import CreatePostsScreen from './Screens/CreatePostsScreen';
 import PostsScreen from './Screens/PostsScreen';
+import Main from './components/Main';
+
+import { store } from './redux/store';
+import db from "./firebase/config";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,14 +32,14 @@ const useRoute = (isStack) => {
       options={{
           headerShown: false,
         }} 
-        name='Main'
+        name='RegistrationScreen'
         component={RegistrationScreen}
         />
       <Stack.Screen  
       options={{
           headerShown: false,
         }}
-         name='LoginForm' 
+         name='LoginScreen' 
          component={LoginScreen} 
          />
       <Stack.Screen
@@ -144,5 +149,13 @@ const useRoute = (isStack) => {
 
 export default function Navigate() {
   const routing = useRoute({});
-  return <NavigationContainer>{routing}</NavigationContainer>;
+  const [user, setUser] = useState(null);
+
+  db.auth().onAuthStateChanged((user) => setUser(user));
+
+  return (
+    <Provider store={store}>
+    <Main />
+   </Provider>
+    );
 }

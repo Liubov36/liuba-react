@@ -7,11 +7,15 @@ import {
   Text,
   View,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   Platform,
   Keyboard,
   Image,
   Pressable,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+
+import { authSignUpUser } from '../redux/auth/authOperations';
 
 const initialState = {
   login: '',
@@ -20,22 +24,27 @@ const initialState = {
 };
 
 const avatar = require('../assets/images/avatar.png');
+
 export default function RegistrationScreen({navigation}) {
-  console.log("navigation", navigation);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
+
+  const dispatch = useDispatch();
+
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
   const [password, setPassword] = useState('');
 
-  const keyboardHide = () => {
+  const handleSubmit = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(state);
-    setState(initialState);
+
+    dispatch(authSignUpUser(state));
+    setstate(initialState);
   };
 
   return (
+    <TouchableWithoutFeedback onPress={handleSubmit}>
     <View style={styles.formContainer}>
       <View
         style={{
@@ -113,7 +122,7 @@ export default function RegistrationScreen({navigation}) {
           </Pressable>
         </View>
         <TouchableOpacity style={styles.btn} activeOpacity={0.8}>
-          <Text style={styles.btnTitle} onPress={keyboardHide}>
+          <Text style={styles.btnTitle} onPress={handleSubmit}>
             Зарегистрироваться
           </Text>
         </TouchableOpacity>
@@ -129,6 +138,7 @@ export default function RegistrationScreen({navigation}) {
         </View>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

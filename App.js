@@ -16,10 +16,13 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { Navigate } from './navigate';
+import { useRoute } from './navigate';
 
 import * as SplashScreen from 'expo-splash-screen';
 import { AppLoading } from 'expo';
+
+import { store } from './redux/store';
+import db from './firebase/config';
 
 import RegistrationScreen from './Screens/RegistrationScreen';
 import LoginScreen from './Screens/LoginScreen';
@@ -49,7 +52,11 @@ export default function App() {
     return null;
   }
   const [iasReady, setIasReady] = useState(false);
-  // const routing = useRoute(true);
+  const [user, setUser] = useState(null);
+
+  db.auth().onAuthStateChanged((user) => setUser(user));
+
+  const routing = useRoute(true);
   if (!iasReady) {
     return (
       <AppLoading

@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, FlatList, Image, Pressable, MaterialCommunityIcons, Text } from 'react-native';
+import { View, FlatList, Image, Pressable, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import DefaultScreenPosts from './nestedScreens/DefaultScreenPosts';
 import CommentsScreen from './nestedScreens/CommentsScreen';
 import MapScreen from './nestedScreens/MapScreen';
-
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const NestedScreen = createStackNavigator();
 
@@ -13,7 +14,7 @@ const PostsScreen = () => {
   return (
     <NestedScreen.Navigator>
     <NestedScreen.Screen
-      name='DefaultScreen'
+      name='DefaultScreenPosts'
       component={DefaultScreenPosts}
     />
     <View style={styles.container}>

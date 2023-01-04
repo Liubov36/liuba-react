@@ -12,27 +12,38 @@ import {
   Pressable,
 } from 'react-native';
 
+import { useDispatch } from 'react-redux';
+import { authSignInUser } from '../redux/auth/authOperations';
+
 const initialState = {
   email: '',
   password: '',
 };
 
 export default function LoginScreen( {navigation}) {
-  console.log("navigation", navigation);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
   const [password, setPassword] = useState('');
 
-  const keyboardHide = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    console.log('click')
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(state);
+    dispatch(authSignInUser(state));
     setState(initialState);
   };
 
+  const keyboardHide = () => {
+    Keyboard.dismiss();
+    setIsShowKeyboard(false);
+  };
+
   return (
+    <TouchableWithoutFeedback onPress={keyboardHide}>
     <View style={styles.formContainer}>
       <View
         style={{
@@ -92,7 +103,7 @@ export default function LoginScreen( {navigation}) {
           </Pressable>
         </View>
         <TouchableOpacity style={styles.btn} activeOpacity={0.8}>
-          <Text style={styles.btnTitle} onPress={keyboardHide}>
+          <Text style={styles.btnTitle} onPress={handleSubmit}>
             Войти
           </Text>
         </TouchableOpacity>
@@ -108,6 +119,7 @@ export default function LoginScreen( {navigation}) {
         </View>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 
