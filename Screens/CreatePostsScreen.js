@@ -11,6 +11,7 @@ import {
 import { Camera } from 'expo-camera';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Location from 'expo-location';
+import db from '../firebase/config';
 
 import CameraIcon from '../assets/images/icons/camera_alt-black-24dp 1.svg';
 
@@ -24,18 +25,56 @@ const initialState = {
 export default function CreatePostsScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
+  const [comment, setComment] = useState('');
+  const [location, setLocation] = useState(null);
+
+  const { userId, nickName } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+      }
+
+      let locationRes = await Location.getCurrentPositionAsync({});
+      setLocation(locationRes);
+    })();
+  }, []);
 
   const takePhoto = async () => {
     const { uri } = await camera.takePictureAsync();
-    const location = await Location.getCurrentPositionAsync();
-    // console.log('latitude', location.coords.latitude);
-    // console.log('longitude', location.coords.longitude);
-    setPhoto(photo.uri);
-    console.log('photo uri',uri);
+    setPhoto(uri);
   };
 
   const sendPhoto = () => {
-    navigation.navigate('DefaultScreen', { photo });
+    uploadPhotoToServer();
+    navigation.navigate('DefaultScreen');
+  };
+
+  const uploadPostToServer = async () => {
+    const photo = await uploadPhotoToServer();
+    const createPost = await db
+      .firestore()
+      .collection('posts')
+      .add({ photo, comment, location: location.coords, userId, nickName });
+  };
+
+  const uploadPhotoToServer = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
+
+    const uniquePostId = Date.now().toString();
+
+    await db.storage().ref(`postImage/${uniquePostId}`).put(file);
+
+    const processedPhoto = await db
+    .storage()
+    .ref('postImage')
+    .child(uniquePostId)
+    .getDownloadURL();
+
+    return processedPhoto;
   };
 
   const [state, setState] = useState(initialState);
@@ -62,6 +101,10 @@ const isFormCompleted = state.photo && state.title && state.location;
           <Text style={styles.snap}>SNAP</Text>
         </TouchableOpacity>
       </Camera>
+        <View>
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.input} onChangeText={setComment} />
+        </View>
         <View style={styles.containerImage}>
           <View style={styles.wrapImage}>
             <View style={styles.addImage}>
@@ -113,6 +156,7 @@ const isFormCompleted = state.photo && state.title && state.location;
         </TouchableOpacity>
       </View>
         </View>
+      </View>
       </View>
       {/* </KeyboardAvoidingView> */}
     </TouchableWithoutFeedback>
@@ -225,5 +269,14 @@ const styles = StyleSheet.create({
         sendLabel: {
           color: '#20b2aa',
           fontSize: 20,
+        },
+        inputContainer: {
+          marginHorizontal: 10,
+        },
+        input: {
+          height: 50,
+          borderWidth: 1,
+          borderColor: '#fff',
+          borderBottomColor: '#20b2aa',
         },
       });
