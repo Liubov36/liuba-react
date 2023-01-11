@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, FlatList, Image, Pressable, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import DefaultScreenPosts from './nestedScreens/DefaultScreenPosts';
-import CommentsScreen from './nestedScreens/CommentsScreen';
-import MapScreen from './nestedScreens/MapScreen';
+import { COLORS } from '../assets/constants';
+import DefaultScreenPosts from '../Screens/nestedScreens/DefaultScreenPosts';
+import CommentsScreen from '../Screens/nestedScreens/CommentsScreen';
+import MapScreen from '../Screens/nestedScreens/MapScreen';
 
 const NestedScreen = createStackNavigator();
 
@@ -86,14 +86,21 @@ const styles = StyleSheet.create({
       },
       userName: {
         fontFamily: 'Roboto-Bold',
+        fontWeight: 700,
         fontSize: 13,
         lineHeight: 15,
-        color: '#212121',
+        paddingLeft: 8,
+        color: COLORS.colorFontPrimary,
+        letterSpacing: 0.01,
       },
       userMail: {
         fontFamily: 'Roboto-Regular',
+        fontWeight: 400,
         fontSize: 11,
         lineHeight: 13,
+        paddingLeft: 8,
+        letterSpacing: 0.01,
+        color: COLORS.colorFontPostUserEmail,
       },
   },
 );

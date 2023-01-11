@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { TextInput } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+
+import { COLORS, IMGS } from '../assets/constants';
 import { useTogglePasswordVisibility } from '../hooks/useTogglePasswordVisibility';
 import {
   StyleSheet,
   Text,
   View,
+  ImageBackground,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Platform,
@@ -13,9 +17,7 @@ import {
   Image,
   Pressable,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
-
-import { authSignUpUser } from '../redux/auth/authOperations';
+import { authSignUpUser } from '../../redux/auth/authOperations';
 
 const initialState = {
   login: '',
@@ -45,6 +47,7 @@ export default function RegistrationScreen({navigation}) {
 
   return (
     <TouchableWithoutFeedback onPress={handleSubmit}>
+      <ImageBackground style={styles.image} source={IMGS.bgImg}>
     <View style={styles.formContainer}>
       <View
         style={{
@@ -117,7 +120,7 @@ export default function RegistrationScreen({navigation}) {
             <MaterialCommunityIcons
               name={rightIcon}
               size={22}
-              color='#232323'
+              color='#BDBDBD'
             />
           </Pressable>
         </View>
@@ -138,21 +141,29 @@ export default function RegistrationScreen({navigation}) {
         </View>
       </View>
     </View>
+    </ImageBackground>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    justifyContent: 'flex-end',
+  },
   formContainer: {
     position: 'relative',
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.bgColor,
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
   },
   imageContainer: {
     position: 'absolute',
-    backgroundColor: '#F6F6F6',
+    backgroundColor: COLORS.bgColor,
     width: 120,
     height: 120,
     borderRadius: 16,
@@ -178,11 +189,11 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 16,
     height: 50,
-    backgroundColor: '#F6F6F6',
-    borderColor: '#E8E8E8',
+    backgroundColor: COLORS.bgColorInput,
+    borderColor: COLORS.borderColor,
     borderRadius: 8,
     fontSize: 18,
-    color: '#212121',
+    color: COLORS.colorFontPrimary,
   },
   inputIcon: {
     top: -38,
@@ -199,12 +210,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     ...Platform.select({
       ios: {
-        backgroundColor: '#FF6C00',
-        borderColor: '#FF6C00',
+        backgroundColor: COLORS.borderColorActive,
+        borderColor: COLORS.borderColorActive,
       },
       android: {
-        backgroundColor: '#FF6C00',
-        borderColor: '#FF6C00',
+        backgroundColor: COLORS.borderColorActive,
+        borderColor: COLORS.borderColorActive,
       },
     }),
   },
@@ -213,11 +224,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
 
     fontSize: 16,
-    color: '#fff',
+    color: COLORS.bgColor,
     fontFamily: 'Roboto-Regular',
   },
   boxQuestion: {
-    // marginBottom: 78,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   paragraph: {
     fontSize: 16,

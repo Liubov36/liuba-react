@@ -1,4 +1,4 @@
-import db from '../../firebase/config';
+import db from '../../src/firebase/config';
 import { authSlice } from './authReducer';
 
 const { updateUserProfile, authStateChange, authSignOut } = authSlice.actions;

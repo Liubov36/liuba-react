@@ -11,10 +11,9 @@ import {
 import { Camera } from 'expo-camera';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Location from 'expo-location';
+
+import { COLORS, IMGS } from '../assets/constants';
 import db from '../firebase/config';
-
-import CameraIcon from '../assets/images/icons/camera_alt-black-24dp 1.svg';
-
 
 const initialState = {
   photo: '',
@@ -88,6 +87,13 @@ const isFormCompleted = state.photo && state.title && state.location;
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
+      <View
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: COLORS.bgColor,
+        }}
+      >
       <Camera style={styles.camera} ref={setCamera}>
         {photo && (
           <View style={styles.takePhotoContainer}>
@@ -108,37 +114,45 @@ const isFormCompleted = state.photo && state.title && state.location;
         <View style={styles.containerImage}>
           <View style={styles.wrapImage}>
             <View style={styles.addImage}>
-              <CameraIcon
-                style={styles.cameraIcon}
-                width={24}
-                height={24}
-                fill='#BDBDBD'
-              />
+            <View style={{ alignItems: 'center' }}>
+            <Image source={IMGS.addPhotoIcon} />
+          </View>
             </View>
           </View>
           <Text style={styles.textImage}>Загрузите фото</Text>
         </View>
         <View style={styles.form}>
           <TextInput
-            style={styles.input}
-            selectionColor={'#212121'}
+              style={styles.input}
+              textAlign={'start'}
+              mode='flat'
+              underlineColor='#E8E8E8'
+              backgroundColor='#fff'
+              activeUnderlineColor={'#E8E8E8'}
+              onFocus={() => setIsShowKeyboard(true)}
             value={state.title}
-            placeholder={'Title...'}
+            placeholder={'Название...'}
             placeholderTextColor={'#BDBDBD'}
             onChangeText={(value) =>
               setState((prevState) => ({ ...prevState, title: value }))
             }
           />
           <TextInput
-            style={styles.input}
-            selectionColor={'#212121'}
+                  style={styles.inputMap}
+                  textAlign={'start'}
+                  mode='flat'
+                  underlineColor='#E8E8E8'
+                  backgroundColor='#fff'
+                  activeUnderlineColor={'#E8E8E8'}
+                  onFocus={() => setIsShowKeyboard(true)}
             value={state.location}
-            placeholder={'Location...'}
+            placeholder={'Местность...'}
             placeholderTextColor={'#BDBDBD'}
             onChangeText={(value) =>
               setState((prevState) => ({ ...prevState, location: value }))
             }
           />
+          <Image style={{ top: -38, left: 30 }} source={IMGS.mapPinIcon} />
           <TouchableOpacity
             activeOpacity={0.7}
             style={
@@ -156,9 +170,9 @@ const isFormCompleted = state.photo && state.title && state.location;
         </TouchableOpacity>
       </View>
         </View>
+        </View>
       </View>
       </View>
-      {/* </KeyboardAvoidingView> */}
     </TouchableWithoutFeedback>
   );
 }
@@ -166,7 +180,7 @@ const isFormCompleted = state.photo && state.title && state.location;
 const styles = StyleSheet.create({
         container: {
           flex: 1,
-          backgroundColor: '#fff',
+          backgroundColor: COLORS.bgColor,
           paddingVertical: 32,
           paddingHorizontal: 16,
         },
@@ -199,7 +213,17 @@ const styles = StyleSheet.create({
           borderWidth: 1,
           borderRadius: 10,
         },
-        containerImage: {},
+        containerImage: {    
+          marginTop: 32,
+          marginHorizontal: 16,
+          height: 240,
+          backgroundColor: COLORS.bgColorInput,
+          borderBottomWidth: 1,
+          borderBottomColor: COLORS.borderColor,
+          borderBottomStyle: 'solid',
+          borderRadius: 8,
+          justifyContent: 'center',
+        },
         wrapImage: {
           position: 'relative',
           height: 240,
@@ -229,7 +253,7 @@ const styles = StyleSheet.create({
         },
         form: {
           width: '100%',
-          marginTop: 32,
+          marginTop: 40,
           backgroundColor: '#fff',
         },
         input: {
@@ -274,9 +298,21 @@ const styles = StyleSheet.create({
           marginHorizontal: 10,
         },
         input: {
+          marginHorizontal: 16,
+          paddingHorizontal: 16,
+          fontFamily: 'Roboto-Regular',
           height: 50,
-          borderWidth: 1,
-          borderColor: '#fff',
-          borderBottomColor: '#20b2aa',
+          borderRadius: 8,
+          fontSize: 16,
+          color: COLORS.colorFontSecondary,
+        },
+        inputMap: {
+          marginHorizontal: 16,
+          paddingHorizontal: 45,
+          fontFamily: 'Roboto-Regular',
+          height: 50,
+          borderRadius: 8,
+          fontSize: 16,
+          color: COLORS.colorFontSecondary,
         },
       });

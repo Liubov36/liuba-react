@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { useRoute } from '../navigate';
 
-import { authStateCahngeUser } from '../redux/auth/authOperations';
+import { authStateCahngeUser } from '../../redux/auth/authOperations';
 
 const Main = () => {
     const { stateChange } = useSelector((state) => state.auth);

@@ -16,30 +16,24 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { useRoute } from './navigate';
 
 import * as SplashScreen from 'expo-splash-screen';
 import { AppLoading } from 'expo';
 
 import { store } from './redux/store';
-import db from './firebase/config';
+import db from './src/firebase/config';
 
-import RegistrationScreen from './Screens/RegistrationScreen';
-import LoginScreen from './Screens/LoginScreen';
-import Home from './Screens/Home';
-import MapScreen from './Screens/nestedScreens/MapScreen';
-import ProfileScreen from './Screens/ProfileScreen';
-import CommentsScreen from './Screens/nestedScreens/CommentsScreen';
-import CreatePostsScreen from './Screens/CreatePostsScreen';
-import PostsScreen from './Screens/PostsScreen';
-import DefaultSreenPosts from './Screens/nestedScreens/DefaultScreenPosts';
+import Navigate from './src/navigate';
+import MapScreen from './src/Screens/nestedScreens/MapScreen';
+import CommentsScreen from './src/Screens/nestedScreens/CommentsScreen';
+import DefaultSreenPosts from './src/Screens/nestedScreens/DefaultScreenPosts';
 
-const image = require('./assets/images/PhotoBG.jpg'); 
+// const image = require('./src/assets/images/PhotoBG.jpg'); 
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
-    'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
+    'Roboto-Regular': require('./src/assets/fonts/Roboto-Regular.ttf'),
+    'Roboto-Bold': require('./src/assets/fonts/Roboto-Bold.ttf'),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -71,14 +65,10 @@ export default function App() {
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
       <ImageBackground style={styles.image} source={image}>
       <KeyboardAvoidingView
+        style={{ flex: 1 }}
           behavior={Platform.OS === 'android' ? 'padding' : 'height'}
         >
-               <RegistrationScreen />
-              <LoginScreen />
-              <Home />
-              <CreatePostsScreen />
-              <PostsScreen />
-              <ProfileScreen />
+          <Navigate />
               <MapScreen />
               <CommentsScreen />
               <DefaultSreenPosts />

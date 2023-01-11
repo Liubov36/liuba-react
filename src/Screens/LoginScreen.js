@@ -1,26 +1,30 @@
 import React, { useState } from 'react';
 import { TextInput } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useDispatch } from 'react-redux';
+
+import { COLORS } from '../assets/constants';
 import { useTogglePasswordVisibility } from '../hooks/useTogglePasswordVisibility';
 import {
   StyleSheet,
   Text,
   View,
+  ImageBackground,
   TouchableOpacity,
   Platform,
   Keyboard,
   Pressable,
 } from 'react-native';
-
-import { useDispatch } from 'react-redux';
-import { authSignInUser } from '../redux/auth/authOperations';
+import { authSignInUser } from '../../redux/auth/authOperations';
 
 const initialState = {
   email: '',
   password: '',
 };
 
-export default function LoginScreen( {navigation}) {
+const image = require('../assets/images/PhotoBG.jpg');
+
+export default function LoginScreen({navigation}) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
@@ -44,11 +48,12 @@ export default function LoginScreen( {navigation}) {
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
+       <ImageBackground style={styles.image} source={image}>
     <View style={styles.formContainer}>
       <View
         style={{
           ...styles.form,
-          marginBottom: isShowKeyboard ? -50 : 78,
+          marginBottom: isShowKeyboard ? -30 : 140,
         }}
       >
         <View>
@@ -98,11 +103,14 @@ export default function LoginScreen( {navigation}) {
             <MaterialCommunityIcons
               name={rightIcon}
               size={22}
-              color='#232323'
+              color='#BDBDBD'
             />
           </Pressable>
         </View>
-        <TouchableOpacity style={styles.btn} activeOpacity={0.8}>
+        <TouchableOpacity 
+        style={styles.btn} 
+        activeOpacity={0.8} 
+        onPress={() => navigation.navigate('Home')}>
           <Text style={styles.btnTitle} onPress={handleSubmit}>
             Войти
           </Text>
@@ -119,19 +127,27 @@ export default function LoginScreen( {navigation}) {
         </View>
       </View>
     </View>
+    </ImageBackground>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    justifyContent: 'flex-end',
+  },
   formContainer: {
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor:  COLORS.bgColor,
     borderTopRightRadius: 25,
     borderTopLeftRadius: 25,
   },
   formTitle: {
-    marginTop: 92,
+    marginTop: 32,
     marginBottom: 33,
     fontFamily: 'Roboto-Regular',
     fontWeight: 500,
@@ -149,11 +165,11 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 16,
     height: 50,
-    backgroundColor: '#F6F6F6',
-    borderColor: '#E8E8E8',
+    backgroundColor: COLORS.bgColorInput,
+    borderColor: COLORS.borderColor,
     borderRadius: 8,
     fontSize: 18,
-    color: '#212121',
+    color: COLORS.colorFontPrimary,
   },
   inputIcon: {
     top: -38,
@@ -170,12 +186,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     ...Platform.select({
       ios: {
-        backgroundColor: '#FF6C00',
-        borderColor: '#FF6C00',
+        backgroundColor: COLORS.buttonBgColorActive,
+        borderColor: COLORS.buttonBgColorActive,
       },
       android: {
-        backgroundColor: '#FF6C00',
-        borderColor: '#FF6C00',
+        backgroundColor: COLORS.buttonBgColorActive,
+        borderColor: COLORS.buttonBgColorActive,
       },
     }),
   },
@@ -184,11 +200,12 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
 
     fontSize: 16,
-    color: '#fff',
+    color: COLORS.bgColor,
     fontFamily: 'Roboto-Regular',
   },
   boxQuestion: {
-    // marginBottom: 78,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   paragraph: {
     fontSize: 16,
@@ -198,6 +215,7 @@ const styles = StyleSheet.create({
   },
   paragraphBtn: {
     fontSize: 16,
+    marginLeft: 5,
     textAlign: 'center',
     color: '#1B4371',
     fontFamily: 'Roboto-Regular',
