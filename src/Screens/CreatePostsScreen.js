@@ -99,13 +99,16 @@ const isFormCompleted = state.photo && state.title && state.location;
           <View style={styles.takePhotoContainer}>
             <Image
               source={{ uri: photo }}
-              style={{ height: 200, width: 200, borderRadius: 10  }}
+              style={{ height: 240, width: 200, borderRadius: 10  }}
             />
           </View>
         )}
         <TouchableOpacity onPress={takePhoto} style={styles.snapContainer}>
           <Text style={styles.snap}>SNAP</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={takePhoto}>
+            <Image source={IMGS.addPhotoIcon} />
+          </TouchableOpacity>
       </Camera>
         <View>
         <View style={styles.inputContainer}>
@@ -181,16 +184,25 @@ const styles = StyleSheet.create({
         container: {
           flex: 1,
           backgroundColor: COLORS.bgColor,
-          paddingVertical: 32,
-          paddingHorizontal: 16,
         },
         camera: {
-          height: '70%',
-          marginHorizontal: 2,
-          marginTop: 40,
-          borderRadius: 10,
+          height: 240,
+          marginHorizontal: 16,
+          marginTop: 32,
+          backgroundColor: COLORS.bgColorInput,
+          borderBottomWidth: 1,
+          borderBottomColor: COLORS.borderColor,
+          borderBottomStyle: 'solid',
+          borderRadius: 8,
           alignItems: 'center',
-          justifyContent: 'flex-end',
+          justifyContent: 'center',
+        },
+        takePhotoContainer: {
+          position: 'absolute',
+          borderColor: '#fff',
+          backgroundColor: 'tomato',
+          top: 0,
+          left: 0,
         },
         snap: {
           color: '#fff',
@@ -204,14 +216,6 @@ const styles = StyleSheet.create({
           justifyContent: 'center',
           alignItems: 'center',
           marginBottom: 20,
-        },
-        takePhotoContainer: {
-          position: 'absolute',
-          top: 50,
-          left: 10,
-          borderColor: '#fff',
-          borderWidth: 1,
-          borderRadius: 10,
         },
         containerImage: {    
           marginTop: 32,
@@ -256,29 +260,34 @@ const styles = StyleSheet.create({
           marginTop: 40,
           backgroundColor: '#fff',
         },
-        input: {
-          fontFamily: 'Roboto-Regular',
-          fontSize: 16,
-          lineHeight: 19,
-          height: 50,
-          marginBottom: 16,
-          borderBottomWidth: 1,
-          borderBottomColor: '#E8E8E8',
-          color: '#212121',
-        },
         button: {
-          marginTop: 16,
-          height: 51,
+          marginHorizontal: 16,
+          marginTop: 23,
+          marginBottom: 16,
+          height: 48,
           backgroundColor: '#F6F6F6',
           borderRadius: 100,
+          borderWidth: 1,
           justifyContent: 'center',
           alignItems: 'center',
+          ...Platform.select({
+            ios: {
+              backgroundColor: COLORS.buttonBgColorPrimary,
+              borderColor: COLORS.buttonBgColorPrimary,
+            },
+            android: {
+              backgroundColor: COLORS.buttonBgColorPrimary,
+              borderColor: COLORS.buttonBgColorPrimary,
+            },
+          }),
         },
         buttonTitle: {
           fontFamily: 'Roboto-Regular',
+          paddingVertical: 16,
+          textAlign: 'center',
           fontSize: 16,
           lineHeight: 19,
-          color: '#BDBDBD',
+          color: COLORS.colorFontSecondary,
         },
         sendBtn: {
           marginHorizontal: 30,

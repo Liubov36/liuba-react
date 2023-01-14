@@ -50,7 +50,7 @@ export default function Home() {
         name='Profile'
         component={ProfileScreen}
       />
-      {/* <MainTab.Screen
+      <MainTab.Screen
         options={{
           tabBarIcon: ({ focused, size, color }) => (
             <Image source={comment} size={24} />
@@ -67,7 +67,7 @@ export default function Home() {
         }}
         name='Map'
         component={MapScreen}
-      /> */}
+      />
     </MainTab.Navigator>
   );
 }

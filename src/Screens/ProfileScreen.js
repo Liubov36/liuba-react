@@ -26,10 +26,28 @@ const ProfileScreen = () => {
         setUserPosts(data.docs.map((doc) => ({ ...doc.data() })))
       );
   };
+  const [clicks, setClicks] = useState(0);
+  const [result, setResult] = useState(0);
 
   const signOut = () => {
     dispatch(authSignOutUser());
   };
+
+  const incr = () => {
+    setClicks((p) => p + 1);
+  };
+
+  useEffect(() => {
+    if (clicks) {
+      setResult(clicks);
+    }
+  }, [clicks]);
+
+  const makeComment = async () => {
+    console.log(`navigation`, navigation);
+    navigation.navigate('CommentsScreen');
+  };
+
   return (
     <ImageBackground style={styles.image} source={IMGS.bgImg}>
         <ScrollView>
@@ -70,36 +88,54 @@ const ProfileScreen = () => {
             >
               {/* 1 ====== */}
               <View style={styles.postWrapper}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CreatePostsScreen')}
+              >
                 <Image source={IMGS.forestPostImg} />
+                </TouchableOpacity>
                 <Text style={styles.postName}>Лес</Text>
               </View>
               <View style={styles.descriptiontWrapper}>
+              <TouchableOpacity onPress={makeComment}>
                 <Image
                   style={{ marginRight: 9 }}
                   size={18}
                   source={IMGS.commentIcon}
                 />
+                </TouchableOpacity>
                 <Text style={styles.textComment}>8</Text>
+                <TouchableOpacity onPress={incr}>
                 <Image
                   style={{ marginRight: 6 }}
                   size={24}
                   source={IMGS.likeIcon}
                 />
-                <Text style={styles.textLike}>153</Text>
+                </TouchableOpacity>
+                <Text style={styles.textLike}>{result}</Text>
                 <Image source={IMGS.mapPinIcon} />
+                <TouchableOpacity
+                onPress={() => navigation.navigate('MapScreen')}
+              >
                 <Text style={styles.location}>Ukraine</Text>
+                </TouchableOpacity>
               </View>
               {/* 2 ==== */}
               <View style={styles.postWrapper}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CreatePostsScreen')}
+              >
                 <Image source={IMGS.sunsetPostImg} />
+                </TouchableOpacity>
                 <Text style={styles.postName}>Закат на Черном море</Text>
               </View>
               <View style={styles.descriptiontWrapper}>
+              <TouchableOpacity onPress={makeComment}>
                 <Image
                   style={{ marginRight: 9 }}
                   size={18}
                   source={IMGS.commentIcon}
                 />
+                   </TouchableOpacity>
                 <Text style={styles.textComment}>3</Text>
                 <Image
                   style={{ marginRight: 6 }}
@@ -108,19 +144,29 @@ const ProfileScreen = () => {
                 />
                 <Text style={styles.textLike}>200</Text>
                 <Image source={IMGS.mapPinIcon} />
+                <TouchableOpacity
+                onPress={() => navigation.navigate('MapScreen')}
+              >
                 <Text style={styles.location}>Ukraine</Text>
+                </TouchableOpacity>
               </View>
               {/* 3 ===== */}
               <View style={styles.postWrapper}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CreatePostsScreen')}
+              >
                 <Image source={IMGS.oldHousePostImg} />
+                </TouchableOpacity>
                 <Text style={styles.postName}>Старый домик в Венеции</Text>
               </View>
               <View style={styles.descriptiontWrapper}>
+              <TouchableOpacity onPress={makeComment}>
                 <Image
                   style={{ marginRight: 9 }}
                   size={18}
                   source={IMGS.commentIcon}
                 />
+                   </TouchableOpacity>
                 <Text style={styles.textComment}>50</Text>
                 <Image
                   style={{ marginRight: 6 }}
@@ -129,7 +175,11 @@ const ProfileScreen = () => {
                 />
                 <Text style={styles.textLike}>200</Text>
                 <Image source={IMGS.mapPinIcon} />
+                <TouchableOpacity
+                onPress={() => navigation.navigate('MapScreen')}
+              >
                 <Text style={styles.location}>Ukraine</Text>
+                </TouchableOpacity>
               </View>
               {/* ===== */}
             </TouchableOpacity>

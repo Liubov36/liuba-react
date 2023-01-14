@@ -5,7 +5,6 @@ import * as Location from 'expo-location';
 
 export default function MapScreen ({ route }) {
   console.log('route.params.location', route.params.location);
-  const { longitude, latitude } = route.params.location;
   const [mapRegion, setMapRegion] = useState({
     latitude: 37.78825,
     longitude: -122.4324,
@@ -35,8 +34,20 @@ export default function MapScreen ({ route }) {
   return (
   <View style={styles.container}>
       <View>
-        <MapView style={styles.map} refion={mapRegion}>
-          <Marker coordinate={mapRegion} title='Marker' />
+        <MapView 
+        style={styles.map} 
+        refion={mapRegion}
+        mapType='standard'
+        minZoomLevel={7}
+        showsUserLocation={true}
+        >
+          {mapRegion && (
+            <Marker
+              coordinate={mapRegion}
+              title='I am here'
+              description='Hello'
+            />
+          )}
         </MapView>
       </View>
       <Button title='Get Location' onPress={userLocation} />

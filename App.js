@@ -28,8 +28,6 @@ import MapScreen from './src/Screens/nestedScreens/MapScreen';
 import CommentsScreen from './src/Screens/nestedScreens/CommentsScreen';
 import DefaultSreenPosts from './src/Screens/nestedScreens/DefaultScreenPosts';
 
-// const image = require('./src/assets/images/PhotoBG.jpg'); 
-
 export default function App() {
   const [fontsLoaded] = useFonts({
     'Roboto-Regular': require('./src/assets/fonts/Roboto-Regular.ttf'),

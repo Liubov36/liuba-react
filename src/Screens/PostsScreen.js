@@ -3,7 +3,7 @@ import { View, FlatList, Image, Pressable, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { COLORS } from '../assets/constants';
+import { COLORS, IMGS } from '../assets/constants';
 import DefaultScreenPosts from '../Screens/nestedScreens/DefaultScreenPosts';
 import CommentsScreen from '../Screens/nestedScreens/CommentsScreen';
 import MapScreen from '../Screens/nestedScreens/MapScreen';
@@ -18,24 +18,6 @@ const PostsScreen = () => {
       component={DefaultScreenPosts}
     />
     <View style={styles.container}>
-        <FlatList
-        data={posts}
-        keyExtractor={(item, indx) => indx.toString()}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              marginBottom: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Image
-              source={{ uri: item.photo }}
-              style={{ width: 350, height: 200 }}
-            />
-          </View>
-        )}
-      />
       <Pressable
             style={styles.inputIcon}
             onPress={handlePasswordVisibility}
@@ -56,9 +38,42 @@ const PostsScreen = () => {
           <Text style={styles.userMail}>inkkli24@gmail.com</Text>
         </View>
       </View>
+      <FlatList
+          data={posts}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View>
+              <View style={styles.postWrapper}>
+                // == 1=====
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('CreatePostsScreen')}
+                >
+                  <Image source={{ uri: item.photo }} />
+                </TouchableOpacity>
+                <Text style={styles.postName}>Лес</Text>
+              </View>
+              <View style={styles.descriptiontWrapper}>
+                <TouchableOpacity onPress={incr}>
+                  <Image
+                    style={{ marginRight: 6 }}
+                    size={24}
+                    source={IMGS.likeIcon}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.textLike}>{result}</Text>
+                <Image source={IMGS.mapPinIcon} />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('MapScreen')}
+                >
+                  <Text style={styles.location}>Ukraine</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            // =========
+          )}
+        />
     </View>
     <NestedScreen.Screen name='CommentsScreen' component={CommentsScreen} />
-      <NestedScreen.Screen name='MapScreen' component={MapScreen} />
     </NestedScreen.Navigator>
   )
 };
@@ -101,6 +116,36 @@ const styles = StyleSheet.create({
         paddingLeft: 8,
         letterSpacing: 0.01,
         color: COLORS.colorFontPostUserEmail,
+      },
+      postName: {
+        paddingTop: 8,
+        fontFamily: 'Roboto-Bold',
+        fontWeight: 500,
+        fontSize: 16,
+        color: COLORS.colorFontPrimary,
+        letterSpacing: 0.01,
+      },
+      descriptiontWrapper: {
+        flexDirection: 'row',
+        paddingTop: 11,
+        marginBottom: 35,
+      },
+      textLike: {
+        marginRight: 128,
+        fontFamily: 'Roboto-Regular',
+        fontWeight: 400,
+        fontSize: 16,
+        color: COLORS.colorFontPrimary,
+        letterSpacing: 0.01,
+      },
+      location: {
+        marginLeft: 8,
+        fontFamily: 'Roboto-Regular',
+        fontWeight: 400,
+        fontSize: 16,
+        color: COLORS.colorFontPrimary,
+        letterSpacing: 0.01,
+        textDecorationLine: 'underline',
       },
   },
 );
